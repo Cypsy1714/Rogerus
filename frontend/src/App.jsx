@@ -1,35 +1,44 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import { AuthContextProvider } from './context/AuthContext'
+import { AuthContext } from './context/AuthContext'
 import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import Welcome from './pages/Welcome'
+import PIN from './pages/PIN'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {user} = useContext(AuthContext);
 
   return (
     <>
       <BrowserRouter>
-        <AuthContextProvider>
           <Navbar />
           <div className="pages">
                 <Routes>
-                  {/* <Route 
+                  { <Route 
                     path="/" 
-                    element={<Home />} 
-                  /> */}
+                    element={user ? <Home /> : <Navigate to='/welcome' />} 
+                  /> }
+                  { <Route 
+                    path="/pin"
+                    element={user ? <PIN /> : <Navigate to='/welcome' />} 
+                  /> }
+                  { <Route 
+                    path="/welcome" 
+                    element={!user ? <Welcome /> : <Navigate to='/' />} 
+                  /> }
                   <Route 
                     path="/login" 
-                    element={<Login />} 
+                    element={!user ? <Login /> : <Navigate to='/' />} 
                   />
                   <Route 
                     path="/signup" 
-                    element={<Signup />} 
+                    element={!user ? <Signup /> : <Navigate to='/' />} 
                   />
                 </Routes>
             </div>
-        </AuthContextProvider>
       </BrowserRouter>
     </>
   )

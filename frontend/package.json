@@ -10,8 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.1.1",
+    "js-crypto-rsa": "^1.0.4",
+    "path-browserify": "^1.0.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "rollup-plugin-node-polyfills": "^0.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
