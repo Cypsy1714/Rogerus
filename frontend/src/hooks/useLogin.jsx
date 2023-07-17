@@ -2,11 +2,13 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { decryptPKey, decryptTag } from "../scripts/securePKey";
 import CryptoJS from "crypto-js";
+import { MessageContext } from "../context/MessageContext";
 
 export const useLogin = () => {
     const [error, set_error] = useState(null);
     const [isLoading, set_isLoading] = useState(null);
     const {dispatch} = useContext(AuthContext);
+    const {dispatch: msg_dispatch} = useContext(MessageContext);
 
     const login = async (username, password, pin) => {
         // reset state variables
@@ -78,6 +80,9 @@ export const useLogin = () => {
             var user = {...json, pKey, pin}
             dispatch({type: 'LOGIN', payload: user});
             console.log(user);
+
+            // load the messages
+            msg_dispatch({type: 'LOGIN', payload: {tag: tag, pKey: pKey}});
 
             set_isLoading(false);
         }

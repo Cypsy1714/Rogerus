@@ -3,12 +3,14 @@ import { isNumber } from "../scripts/isNumber";
 import CryptoJS from "crypto-js";
 import { decryptPKey } from "../scripts/securePKey";
 import { AuthContext } from "../context/AuthContext";
+import { MessageContext } from "../context/MessageContext";
 
 export const usePin = () => {
     const [error, set_error] = useState(null);
     const [success, set_success] = useState(false);
     const [isLoading, set_isLoading] = useState(null);
-    const {user, dispatch} = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
+    const {dispatch} = useContext(MessageContext);
     const tag = user.tag;
 
     const enterPin = async (pin) => {
@@ -48,6 +50,9 @@ export const usePin = () => {
             set_error('Incorrect PIN');
             return;
         }
+
+        // load the messages
+        dispatch({type: 'LOGIN', payload: {tag: tag, pKey: pKey}});
 
         // pin correct, update the AuthContext
         user.pKey = pKey;

@@ -4,11 +4,13 @@ import { isNumber } from "../scripts/isNumber";
 import rsa from 'js-crypto-rsa';
 import { encryptPKey, decryptPKey, encryptTag } from "../scripts/securePKey";
 import CryptoJS from "crypto-js";
+import { MessageContext } from "../context/MessageContext";
 
 export const useSignup = () => {
     const [error, set_error] = useState(null);
     const [isLoading, set_isLoading] = useState(null);
     const {dispatch} = useContext(AuthContext);
+    const {dispatch: msg_dispatch} = useContext(MessageContext);
 
     const signup = async (tag, username, password, pin) => {
         // reset state variables
@@ -77,6 +79,9 @@ export const useSignup = () => {
             var user = {...json, pKey: privateKey, pin};
             dispatch({type: 'LOGIN', payload: user});
             console.log(user);
+            
+            // load the messages
+            msg_dispatch({type: 'LOGIN', payload: {tag: tag, pKey: privateKey}});
 
             set_isLoading(false);
         }
