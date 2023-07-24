@@ -34,12 +34,12 @@ const Home = () => {
 
     const handleAddContact = async (e) => {
         e.preventDefault();
-        dispatch({type: 'ADD_CONTACT', payload:{tag: contact_tag, key: "placeholderkey", messages: []}})
+        dispatch({type: 'ADD_CONTACT', payload:{tag: msg_tag, pKey: user.pKey, user: user.tag, message: {tag: contact_tag, key: "placeholderkey", messages: []}}})
     }
 
     const handleAddMessage = async (e) => {
         e.preventDefault();
-        dispatch({type: 'ADD_MESSAGE', payload:{tag: msg_tag, message: {date: "dateplaceholder", content: msg}}})
+        dispatch({type: 'ADD_MESSAGE', payload:{tag: msg_tag, pKey: user.pKey, user: user.tag, message: {date: "dateplaceholder", content: msg}}})
     }
 
     return (
